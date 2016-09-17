@@ -25,7 +25,10 @@
       "requireReturnDescription": false
     }],
 
+    "newline-per-chained-call": 0,
+
     "ava/no-skip-assert": 0,
-    "ava/no-skip-test": 0
+    "ava/no-skip-test": 0,
+    "ava/no-todo-test": 0
   }
 }

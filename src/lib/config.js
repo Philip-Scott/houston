@@ -93,6 +93,7 @@ const missingConfig = []
 // If any higher level attribute is set to false, don't consider it missing
 Object.keys(dotExample).forEach((key) => {
   if (dotConfig[key] != null) return
+  if (key.substring(0, 8) === 'database') return
 
   const splitKey = key.split('.')
 

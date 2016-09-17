@@ -2,22 +2,20 @@
  * lib/database.js
  * Sets up database connection
  *
- * @exports {Object} - initialized mongoose object
+ * @exports {Object} knex - An intialized knex object
+ * @exports {Object} default - An initalized bookshelf object
  */
 
-import mongoose from 'mongoose'
+import knexPkg from 'knex'
+import bookshelfPkg from 'bookshelf'
 
 import config from './config'
-import log from './log'
 
-mongoose.Promise = global.Promise
+export const knex = knexPkg(config.database)
 
-mongoose.connect(config.database)
+const bookshelf = bookshelfPkg(knex)
 
-mongoose.connection.on('error', (msg) => log.error(msg))
+bookshelf.plugin('registry')
+bookshelf.plugin('visibility')
 
-mongoose.connection.once('open', () => log.info('Connected to database'))
-
-mongoose.connection.once('close', () => log.info('Disconnected to database'))
-
-export default mongoose
+export default bookshelf

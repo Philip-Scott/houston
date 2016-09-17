@@ -36,7 +36,21 @@ module.exports.aptly = {
   stable: 'houston'
 }
 
-module.exports.database = 'mongodb://localhost/houston-dev'
+/**
+ * This is a knex database configuration object
+ * By default it uses PostgreSQL for a database connection, but any knex
+ * supported database will work. See knex documentation for more information
+ *
+ * @link http://knexjs.org/#Installation-client
+ */
+module.exports.database = {
+  client: 'pg',
+  connection: {
+    host: 'localhost',
+    user: 'houston',
+    database: 'houston'
+  }
+}
 
 module.exports.server = {
   secret: 'hiGvpfbJhSNlC15OXiCxXWcEUYVeKBqb',

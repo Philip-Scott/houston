@@ -29,7 +29,13 @@ module.exports.aptly = {
   public: '2Rm7LJ5gXK7qRQpC6FfdxGLTTbMUnSrh'
 }
 
-module.exports.database = 'mongodb://localhost/houston-test'
+module.exports.database = {
+  client: 'sqlite3',
+  //debug: true,
+  connection: {
+    filename: ':memory:'
+  }
+}
 
 module.exports.server = {
   secret: 'ermagerditsasecretsodonttellanyone',

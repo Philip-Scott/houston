@@ -8,7 +8,7 @@ import path from 'path'
 import test from 'ava'
 
 import alias from 'root/.alias'
-import mockConfig from './fixtures/config'
+import mockConfig from 'test/fixtures/config'
 
 test.beforeEach('setup configuration mock', (t) => {
   mock(path.resolve(alias.resolve.alias['root'], 'config.js'), mockConfig)
@@ -19,7 +19,7 @@ test('can be loaded', (t) => {
   const config = t.context.ifRole
 
   t.is(typeof config, 'object')
-  t.is(config['database'], 'mongodb://localhost/houston-test')
+  t.is(config['rights']['beta'], 'awesomepeople')
   t.is(config['server']['secret'], 'ermagerditsasecretsodonttellanyone')
   t.truthy(config['houston']['version'])
 })
