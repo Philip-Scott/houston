@@ -31,7 +31,7 @@ module.exports.aptly = {
 
 module.exports.database = {
   client: 'sqlite3',
-  //debug: true,
+  useNullAsDefault: true,
   connection: {
     filename: ':memory:'
   }
