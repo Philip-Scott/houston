@@ -37,5 +37,5 @@ export function up (knex) {
  * @return {Promise} - a promise of completion
  */
 export function down (knex) {
-  return knex.schema.dropTable('users')
+  return knex.schema.dropTableIfExists('users')
 }

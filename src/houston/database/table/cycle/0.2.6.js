@@ -37,5 +37,5 @@ export function up (knex) {
  * @return {Void}
  */
 export function down (knex) {
-  return knex.schema.dropTable('cycles')
+  return knex.schema.dropTableIfExists('cycles')
 }

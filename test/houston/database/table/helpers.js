@@ -1,5 +1,5 @@
 /**
- * test/houston/database/table/index.js
+ * test/houston/database/table/helpers.js
  * Tests various functions used in database migration
  *
  * FIXME: mocking of database tables is not working. Currently skipping
@@ -10,7 +10,6 @@ import mock from 'mock-require'
 import path from 'path'
 import test from 'ava'
 
-import * as helpers from 'test/houston/database/_helpers'
 import alias from 'root/.alias'
 
 import mockIndex from './fixtures'
@@ -21,12 +20,15 @@ const tablePath = path.resolve(alias.resolve.alias['houston'], 'database', 'tabl
 
 test.beforeEach('setup configuration mock', (t) => {
   mock(path.resolve(alias.resolve.alias['root'], 'config.js'), mockConfig)
+
+  // FIXME: we are not successfully mocking the table index.
+  // This needs fixed so we can unskip the last tests
   mock(path.resolve(tablePath, 'index.js'), mockIndex)
 
   t.context.database = mock.reRequire(path.resolve(alias.resolve.alias['lib'], 'database'))
   t.context.helpers = mock.reRequire(path.resolve(tablePath, 'helpers'))
 
-  return helpers.dropAll(t.context.database.knex)
+  return t.context.helpers.downAll(t.context.database.knex, '0.0.0')
 })
 
 test('new databases show as 0.0.0 version', async (t) => {
@@ -42,31 +44,24 @@ test('returns correct database version on existing instance', async (t) => {
   const currentVersion = t.context.helpers.currentVersion
   const knex = t.context.database.knex
 
-  await knex.schema.createTableIfNotExists('houston', (table) => {
-    table.timestamps()
-
-    table.string('table_to')
-    table.string('table_from')
-  })
-
-  const date = new Date()
+  await t.context.helpers.up(knex, 'houston')
 
   await knex('houston').insert({
     table_to: '0.0.1',
     table_from: '0.0.0',
-    updated_at: date
+    time_created: new Date(0)
   })
 
   await knex('houston').insert({
     table_to: '0.1.0',
     table_from: '0.0.1',
-    updated_at: date + 1000
+    time_created: new Date(1000)
   })
 
   await knex('houston').insert({
     table_to: '0.2.0',
     table_from: '0.1.0',
-    updated_at: date + 2000
+    time_created: new Date(2000)
   })
 
   const version = await currentVersion(knex)

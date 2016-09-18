@@ -6,6 +6,8 @@
  */
 
 export default {
+  'houston': require('./houston').default,
+
   'user': require('./user').default,
   'login': require('./login').default
 }

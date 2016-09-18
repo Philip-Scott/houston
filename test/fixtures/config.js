@@ -29,6 +29,20 @@ module.exports.aptly = {
   public: '2Rm7LJ5gXK7qRQpC6FfdxGLTTbMUnSrh'
 }
 
+// This can be useful if you want to test against a real database
+// WARN: this can cause test failure, and will erase with existing data!!!
+/**
+module.exports.database = {
+  client: 'pg',
+  connection: {
+    host: 'localhost',
+    user: 'houston',
+    password: 'houston',
+    database: 'houston'
+  }
+}
+**/
+
 module.exports.database = {
   client: 'sqlite3',
   useNullAsDefault: true,

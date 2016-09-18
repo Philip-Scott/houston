@@ -6,6 +6,8 @@
  * @exports {Function} getUpdates - grabs all needed upgrades for a table
  * @exports {Function} up - upgrades a table to X version
  * @exports {Function} down - downgrades a table to X version
+ * @exports {Function} upAll - upgrades all tables to X version
+ * @exports {Function} downAll - downgrades all tables to X version
  */
 
 import Promise from 'bluebird'
@@ -21,8 +23,12 @@ import tables from './index'
  *
  * @param {Object} knex - an initalized knex instance
  * @returns {String} - semver of current database table version
+ *
+ * @throws {Error} - on invalid knex object
  */
 export async function currentVersion (knex) {
+  if (typeof knex.schema.table !== 'function') throw new Error('Invalid knex object')
+
   const table = await knex.schema.hasTable('houston')
 
   if (!table) {
@@ -30,7 +36,7 @@ export async function currentVersion (knex) {
     return '0.0.0'
   }
 
-  const updates = await knex.select('table_to').from('houston').orderBy('updated_at', 'desc').limit(1)
+  const updates = await knex.select('table_to').from('houston').orderBy('key', 'desc').limit(1)
 
   if (updates.length === 0) {
     log.debug('Database includes houston table, but no rows exist')
@@ -41,6 +47,38 @@ export async function currentVersion (knex) {
     log.debug(`Database includes houston table. Currently version ${version}`)
     return version
   }
+}
+
+/**
+ * setVersion
+ * Sets the current version in database
+ *
+ * @param {Object} knex - an initalized knex instance
+ * @param {String} to - version to set in database
+ * @returns {Boolean} - true if successful
+ *
+ * @throws {Error} - on invalid semver to version
+ * @throws {Error} - on invalid knex object
+ */
+export async function setVersion (knex, to = config.houston.version) {
+  if (!semver.valid(to)) throw new Error('Invalid semver to version number')
+  if (typeof knex.schema.table !== 'function') throw new Error('Invalid knex object')
+
+  const table = await knex.schema.hasTable('houston')
+
+  if (!table) {
+    log.debug('Database does not include houston table.')
+    return false
+  }
+
+  const current = await currentVersion(knex)
+
+  const updates = await knex('houston').insert({
+    table_to: to,
+    table_from: current
+  })
+
+  return (updates != null)
 }
 
 /**
@@ -58,13 +96,15 @@ export async function currentVersion (knex) {
  */
 export function getUpdates (table, fro, to = config.houston.version) {
   if (tables[table] == null) throw new Error('Table does not exist')
-  if (!semver.valid(to)) throw new Error('Invalid upgrade semver version number')
+  if (!semver.valid(fro)) throw new Error('Invalid semver fro version number')
+  if (!semver.valid(to)) throw new Error('Invalid semver to version number')
 
   const arr = []
   Object.keys(tables[table]).forEach((key) => arr.push([key, tables[table][key]]))
 
   return arr
   .filter((a) => semver.valid(a[0]))
+  .filter((a) => semver.gt(a[0], fro) && semver.lte(a[0], to))
   .sort((a, b) => semver.compare(a[0], b[0]))
   .map((a) => a[1])
 }
@@ -72,6 +112,8 @@ export function getUpdates (table, fro, to = config.houston.version) {
 /**
  * up
  * Upgrades current existing table
+ * WARN: Houston REQUIRES all tests to be same semver. This function is only
+ * for internal use!
  *
  * @param {Object} knex - an initalized knex instance
  * @param {String} table - a valid table name
@@ -87,7 +129,7 @@ export async function up (knex, table, to = config.houston.version) {
   if (tables[table] === null) throw new Error('Table does not exist')
   if (!semver.valid(to)) throw new Error('Invalid upgrade semver version number')
 
-  const updates = getUpdates(table, undefined, to)
+  const updates = getUpdates(table, await currentVersion(knex), to)
 
   log.debug(`Running ${updates.length} up migrations to ${table} table`)
 
@@ -97,6 +139,8 @@ export async function up (knex, table, to = config.houston.version) {
 /**
  * down
  * Downgrades current existing table
+ * WARN: Houston REQUIRES all tests to be same semver. This function is only
+ * for internal use!
  *
  * @param {Object} knex - an initalized knex instance
  * @param {String} table - a valid table name
@@ -130,11 +174,13 @@ export async function down (knex, table, to = '0.0.0') {
  * @throws {Error} - if invalid knex object
  * @throws {Error} - if invalid semver version
  */
-export function upAll (knex, to = config.houston.version) {
+export async function upAll (knex, to = config.houston.version) {
   if (typeof knex.schema.table !== 'function') throw new Error('Invalid knex object')
   if (!semver.valid(to)) throw new Error('Invalid upgrade semver version number')
 
-  return Promise.each(Object.keys(tables), (table) => up(knex, table, to))
+  await Promise.each(Object.keys(tables), (table) => up(knex, table, to))
+
+  await setVersion(knex, to)
 }
 
 /**
@@ -148,9 +194,11 @@ export function upAll (knex, to = config.houston.version) {
  * @throws {Error} - if invalid knex object
  * @throws {Error} - if invalid semver version
  */
-export function downAll (knex, to = config.houston.version) {
+export async function downAll (knex, to = '0.0.0') {
   if (typeof knex.schema.table !== 'function') throw new Error('Invalid knex object')
   if (!semver.valid(to)) throw new Error('Invalid downgrade semver version number')
 
-  return Promise.each(Object.keys(tables), (table) => up(knex, table, to))
+  await Promise.each(Object.keys(tables).reverse(), (table) => down(knex, table, to))
+
+  await setVersion(knex, to)
 }

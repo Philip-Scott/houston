@@ -38,5 +38,5 @@ export function up (knex) {
  * @return {Void}
  */
 export function down (knex) {
-  return knex.schema.dropTable('logins')
+  return knex.schema.dropTableIfExists('logins')
 }
