@@ -5,7 +5,7 @@
  * @exports {Object} default - a list of all the tables avalible
  */
 
- export default {
-   'login': require('./login').default,
-   'user': require('./user').default
- }
+export default {
+  'user': require('./user').default,
+  'login': require('./login').default
+}

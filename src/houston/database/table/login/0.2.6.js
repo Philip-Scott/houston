@@ -14,10 +14,10 @@
  * @return {Void}
  */
 export function up (knex) {
-  return knex.schema.createTable('logins', (table) => {
+  return knex.schema.createTableIfNotExists('logins', (table) => {
     table.increments('key')
 
-    table.string('user_key').references('users.key')
+    table.integer('user_key').unsigned().references('key').inTable('users').onDelete('CASCADE')
 
     table.string('service_name')
     table.string('service_id')

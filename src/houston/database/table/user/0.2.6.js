@@ -14,7 +14,7 @@
  * @return {Promise} - a promise of completion
  */
 export function up (knex) {
-  return knex.schema.createTable('users', (table) => {
+  return knex.schema.createTableIfNotExists('users', (table) => {
     table.increments('key')
 
     table.string('username', 64)
