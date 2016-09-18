@@ -14,7 +14,7 @@
  * @return {Void}
  */
 export function up (knex) {
-  knex.schema.createTable('logins', (table) => {
+  return knex.schema.createTable('logins', (table) => {
     table.increments('key')
 
     table.string('user_key').references('users.key')

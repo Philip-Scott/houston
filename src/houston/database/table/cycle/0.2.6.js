@@ -14,7 +14,7 @@
  * @return {Void}
  */
 export function up (knex) {
-  knex.schema.createTable('cycles', (table) => {
+  return knex.schema.createTable('cycles', (table) => {
     table.increments('key')
 
     table.string('repo')
