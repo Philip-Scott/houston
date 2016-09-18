@@ -9,13 +9,13 @@
 
 import Database from 'lib/database'
 
-import Base from './base'
+import * as Base from './base'
 
 /**
  * Issues
  * Holds all issues returned from flightcheck
  */
-class Issues extends Base {
+class Issues extends Base.Model {
 
   /**
    * Modal settings

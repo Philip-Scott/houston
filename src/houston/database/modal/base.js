@@ -2,16 +2,16 @@
  * houston/database/modal/base.js
  * A master modal class inherited by everything else
  *
- * @export {Class} default - a master class to inerhit
+ * @export {Class} Model - a master class to inerhit
  */
 
 import Database from 'lib/database'
 
 /**
- * default
+ * Model
  * A master modal class inherited by everything else
  */
-export default class extends Database.Model {
+export const Model = class extends Database.Model {
 
   /**
    * Modal settings

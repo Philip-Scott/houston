@@ -9,13 +9,13 @@
 
 import Database from 'lib/database'
 
-import Base from './base'
+import * as Base from './base'
 
 /**
  * Cycles
  * Holds all cycle information
  */
-class Cycles extends Base {
+class Cycles extends Base.Model {
 
   /**
    * Modal settings

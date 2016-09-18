@@ -22,12 +22,9 @@ import tables from './index'
  * @returns {String} - semver of current database table version
  */
 export async function currentVersion (knex) {
-  await knex.schema.createTableIfNotExists('houston', (table) => {
-    table.timestamps()
+  const table = await knex.schema.hasTable('houston')
 
-    table.string('table_to')
-    table.string('table_from')
-  })
+  if (!table) return '0.0.0'
 
   const updates = await knex.select('table_to').from('houston').orderBy('updated_at', 'desc').limit(1)
 

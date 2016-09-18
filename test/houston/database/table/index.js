@@ -74,7 +74,7 @@ test('returns correct database version on existing instance', async (t) => {
   t.is(version, '0.2.0')
 })
 
-test.skip('can find needed migration files', async (t) => {
+test.skip('can find needed migration files', (t) => {
   const getUpdates = t.context.helpers.getUpdates
 
   const one = getUpdates('table_one', '0.0.0', '0.0.2')

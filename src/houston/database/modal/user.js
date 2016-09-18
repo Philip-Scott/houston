@@ -9,13 +9,13 @@
 
 import Database from 'lib/database'
 
-import Base from './base'
+import * as Base from './base'
 
 /**
  * Users
  * Holds all user helpers to be used
  */
-class Users extends Base {
+class Users extends Base.Model {
 
   /**
    * Modal settings
