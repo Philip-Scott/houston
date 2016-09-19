@@ -22,8 +22,11 @@ export function up (knex) {
     table.string('service_id').notNullable()
 
     table.string('tag').notNullable()
-    table.string('version').notNullable()
     table.string('author')
+
+    table.integer('version_major').notNullable()
+    table.integer('version_minor').notNullable()
+    table.integer('version_patch').notNullable()
 
     table.timestamp('time_created')
     table.timestamp('time_added').defaultTo(knex.fn.now())

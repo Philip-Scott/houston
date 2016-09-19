@@ -39,18 +39,4 @@ export const Model = class extends Database.Model {
    * These should be quite obvious of what they are. They will be inherited by
    * every other model, so make sure you don't hard set stuff.
    */
-
-  /**
-   * orderSemver
-   * Sorts the row based on semver versioning
-   * NOTE: this is considered a raw query. you will need the string_to_array
-   * function supported in your database (postgresql)
-   *
-   * @param {String} field - the column name to sort on
-   * @param {String} style - which direction to sort
-   * @returns {Object} - bookshelf query object
-   */
-  orderSemver (field, style = 'ASC') {
-    return this.query((q) => q.orderByRaw(`string_to_array(${field}, '.')::int[] ${style}`))
-  }
 }

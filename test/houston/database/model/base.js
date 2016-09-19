@@ -26,5 +26,4 @@ test.beforeEach('setup configuration mock', async (t) => {
   await testHelpers.seed(t.context.database.knex, 'database_one')
 })
 
-test.serial.todo('Figure out a way to test semver sorting. It does not support sqlite')
 test.serial.todo('Add tests to future base model crude functions')

@@ -43,6 +43,17 @@ class Releases extends Base.Model {
   cycles () {
     return this.hasMany('Cycle', 'release_id')
   }
+
+  /**
+   * orderSemver
+   * Sorts the row based on semver versioning
+   *
+   * @param {String} style - which direction to sort, defaults to latest first
+   * @returns {Object} - bookshelf query object
+   */
+  orderSemver (style = 'DESC') {
+    return this.orderBy('version_major', style).orderBy('version_minor', style).orderBy('version_patch', style)
+  }
 }
 
 export default Database.model('Release', Releases)

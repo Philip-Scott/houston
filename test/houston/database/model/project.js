@@ -45,7 +45,7 @@ test.serial('has a good relationship with releases', async (t) => {
   t.is(typeof one, 'object')
   t.is(typeof two, 'object')
 
-  t.is(one.related('releases').length, 3)
+  t.is(one.related('releases').length, 4)
   t.is(two.related('releases').length, 0)
 })
 
