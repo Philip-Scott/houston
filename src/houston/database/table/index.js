@@ -14,5 +14,5 @@ export default {
   'project': require('./project').default,
   'release': require('./release').default,
   'cycle': require('./cycle').default,
-  'issue': require('./issue').default
+  'log': require('./log').default
 }

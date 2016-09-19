@@ -1,6 +1,6 @@
 /**
- * houston/database/modal/user.js
- * The database modal for users
+ * houston/database/model/user.js
+ * The database model for users
  *
  * @see houston/database/table/user
  *
@@ -37,7 +37,7 @@ class Users extends Base.Model {
   /**
    * login
    *
-   * @return {Object} - bookshelf relationship to the login modal
+   * @return {Object}[] - all available login services for the user
    */
   logins () {
     return this.hasMany('Login', 'user_id')

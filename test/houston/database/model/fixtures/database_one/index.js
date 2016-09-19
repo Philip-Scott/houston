@@ -7,5 +7,5 @@
 
 export default {
   'cycles': require('./cycles').default,
-  'issues': require('./issues').default
+  'logs': require('./logs').default
 }

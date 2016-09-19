@@ -1,20 +1,20 @@
 /**
- * houston/database/table/issue/0.2.6.js
- * Creates the issue table for version 0.2.6
+ * houston/database/table/log/0.2.6.js
+ * Creates the log table for version 0.2.6
  *
- * @exports {Function} up - Creates a new database issue table
- * @exports {Function} down - Drops the current database issue table
+ * @exports {Function} up - Creates a new database log table
+ * @exports {Function} down - Drops the current database log table
  */
 
 /**
  * up
- * Creates a new database issue table
+ * Creates a new database log table
  *
  * @param {Object} knex - an initalized knex object
  * @return {Void}
  */
 export function up (knex) {
-  return knex.schema.createTableIfNotExists('issues', (table) => {
+  return knex.schema.createTableIfNotExists('logs', (table) => {
     table.increments('id')
 
     table.integer('cycle_id').unsigned().references('id').inTable('cycles').onDelete('CASCADE')
@@ -31,11 +31,11 @@ export function up (knex) {
 
 /**
  * down
- * Drops the current database issue table
+ * Drops the current database log table
  *
  * @param {Object} knex - an initalized knex object
  * @return {Void}
  */
 export function down (knex) {
-  return knex.schema.dropTableIfExists('issues')
+  return knex.schema.dropTableIfExists('logs')
 }

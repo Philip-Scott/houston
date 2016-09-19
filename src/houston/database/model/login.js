@@ -1,6 +1,6 @@
 /**
- * houston/database/modal/login.js
- * The database modal for user logins
+ * houston/database/model/login.js
+ * The database model for user logins
  *
  * @see houston/database/table/login
  *
@@ -37,7 +37,7 @@ class Logins extends Base.Model {
   /**
    * user
    *
-   * @return {Object} - bookshelf relationship to the user modal
+   * @return {Object} - the user this login belongs to
    */
   user () {
     return this.belongsTo('User', 'user_id')

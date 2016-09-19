@@ -8,6 +8,9 @@
  */
 
 export Cycle from './cycle'
-export Issue from './issue'
+export Houston from './houston'
+export Log from './log'
 export Login from './login'
+export Project from './project'
+export Release from './release'
 export User from './user'

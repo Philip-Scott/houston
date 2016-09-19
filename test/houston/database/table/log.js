@@ -1,6 +1,6 @@
 /**
- * test/issue/database/modal/issue.js
- * Tests issues table for needed fields
+ * test/log/database/modal/log.js
+ * Tests logs table for needed fields
  */
 
 import mock from 'mock-require'
@@ -26,11 +26,11 @@ test.beforeEach('setup configuration mock', async (t) => {
 test('has necessary table columns', async (t) => {
   const knex = t.context.database.knex
 
-  const one = await knex.schema.hasTable('issues')
+  const one = await knex.schema.hasTable('logs')
 
-  const two = await knex.schema.hasColumn('issues', 'cycle_id')
-  const three = await knex.schema.hasColumn('issues', 'service_id')
-  const four = await knex.schema.hasColumn('issues', 'title')
+  const two = await knex.schema.hasColumn('logs', 'cycle_id')
+  const three = await knex.schema.hasColumn('logs', 'service_id')
+  const four = await knex.schema.hasColumn('logs', 'title')
 
   t.true(one)
   t.true(two)

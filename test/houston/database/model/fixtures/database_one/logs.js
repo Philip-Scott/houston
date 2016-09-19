@@ -1,5 +1,5 @@
 /**
- * test/houston/database/model/fixtures/database_one/issues.js
+ * test/houston/database/model/fixtures/database_one/logs.js
  * Exports some fake data for database testing
  *
  * @exports {Object}[] default - phony database rows
