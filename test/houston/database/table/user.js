@@ -30,10 +30,12 @@ test('has necessary table columns', async (t) => {
 
   const two = await knex.schema.hasColumn('users', 'username')
   const three = await knex.schema.hasColumn('users', 'email')
-  const four = await knex.schema.hasColumn('users', 'right')
+  const four = await knex.schema.hasColumn('users', 'right_review')
+  const five = await knex.schema.hasColumn('users', 'right_admin')
 
   t.true(one)
   t.true(two)
   t.true(three)
   t.true(four)
+  t.true(five)
 })

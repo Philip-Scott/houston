@@ -25,8 +25,8 @@ test.beforeEach('setup configuration mock', (t) => {
   // This needs fixed so we can unskip the last tests
   mock(path.resolve(tablePath, 'index.js'), mockIndex)
 
-  t.context.database = mock.reRequire(path.resolve(alias.resolve.alias['lib'], 'database'))
-  t.context.helpers = mock.reRequire(path.resolve(tablePath, 'helpers'))
+  t.context.database = require(path.resolve(alias.resolve.alias['lib'], 'database'))
+  t.context.helpers = require(path.resolve(tablePath, 'helpers'))
 
   return t.context.helpers.downAll(t.context.database.knex, '0.0.0')
 })

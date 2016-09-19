@@ -21,7 +21,8 @@ export function up (knex) {
     table.string('email')
     table.string('avatar')
 
-    table.enum('right', ['USER', 'BETA', 'REVIEW', 'ADMIN'])
+    table.boolean('right_review').defaultTo(false)
+    table.boolean('right_admin').defaultTo(false)
 
     table.timestamp('time_created').defaultTo(knex.fn.now())
     table.timestamp('time_updated')
