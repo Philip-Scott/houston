@@ -14,27 +14,17 @@ import * as Base from './base'
 /**
  * Cycles
  * Holds all cycle information
+ *
+ * @extends Base.Model
  */
 class Cycles extends Base.Model {
 
   /**
-   * Modal settings
-   * @link http://bookshelfjs.org/#Model-subsection-construction
-   */
-
-  /**
    * tableName
    *
-   * @return {String} - the name of the table
+   * @return {String} - the table name
    */
-  get tableName () {
-    return 'cycles'
-  }
-
-  /**
-   * Relationships
-   * @link http://bookshelfjs.org/#associations
-   */
+  get tableName () { return 'cycles' }
 
   /**
    * issues

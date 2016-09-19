@@ -14,27 +14,17 @@ import * as Base from './base'
 /**
  * Issues
  * Holds all issues returned from flightcheck
+ *
+ * @extends Base.Model
  */
 class Issues extends Base.Model {
 
   /**
-   * Modal settings
-   * @link http://bookshelfjs.org/#Model-subsection-construction
-   */
-
-  /**
    * tableName
    *
-   * @return {String} - the name of the table
+   * @return {String} - the table name
    */
-  get tableName () {
-    return 'issues'
-  }
-
-  /**
-   * Relationships
-   * @link http://bookshelfjs.org/#associations
-   */
+  get tableName () { return 'issues' }
 
   /**
    * parent

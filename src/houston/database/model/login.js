@@ -13,38 +13,26 @@ import * as Base from './base'
 
 /**
  * Users
- * Holds all user helpers to be used
+ * Holds all login helpers to be used
+ *
+ * @extends Base.Model
  */
 class Logins extends Base.Model {
 
   /**
-   * Modal settings
-   * @link http://bookshelfjs.org/#Model-subsection-construction
-   */
-
-  /**
    * tableName
    *
-   * @return {String} - the name of the table
+   * @return {String} - the table name
    */
-  get tableName () {
-    return 'logins'
-  }
+  get tableName () { return 'logins' }
 
   /**
    * hidden
+   * Returns all fields that should be removed from toJSON output
    *
-   * @return {String}[] - files to be hidden on toJSON
+   * @return {String}[] - a list of fields to remove
    */
-  get hidden () {
-    // Just to be safe we remove the timestamps as well
-    return ['service_access', 'service_refresh', 'time_updated', 'time_used']
-  }
-
-  /**
-   * Relationships
-   * @link http://bookshelfjs.org/#associations
-   */
+  get hidden () { return ['service_access', 'service_refresh', 'time_updated', 'time_used'] }
 
   /**
    * user

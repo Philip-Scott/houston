@@ -14,7 +14,7 @@ import Database from 'lib/database'
 export const Model = class extends Database.Model {
 
   /**
-   * Modal settings
+   * Settings
    * @link http://bookshelfjs.org/#Model-subsection-construction
    *
    * Basic rules:
