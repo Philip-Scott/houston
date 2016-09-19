@@ -1,6 +1,6 @@
 /**
- * test/houston/database/model/cycle.js
- * Tests the cycle model
+ * test/houston/database/model/log.js
+ * Tests the log model
  */
 
 import mock from 'mock-require'
@@ -27,23 +27,27 @@ test.beforeEach('setup configuration mock', async (t) => {
 })
 
 test.serial('can count', async (t) => {
-  const Cycle = t.context.models.Cycle
+  const Log = t.context.models.Log
 
-  const one = await Cycle.count()
-  const two = await Cycle.where('release_id', 1).count()
+  const one = await Log.count()
+  const two = await Log.where('cycle_id', 3).count()
 
   t.is(one, 4)
   t.is(two, 2)
 })
 
-test.serial('has a good relationship with logs', async (t) => {
-  const Cycle = t.context.models.Cycle
+test.serial('has a good relationship with the cycle', async (t) => {
+  const Log = t.context.models.Log
 
-  const one = await Cycle.forge({'id': 1}).logs().count()
-  const two = await Cycle.forge({'id': 2}).logs().count()
-  const three = await Cycle.forge({'id': 3}).logs().count()
+  const one = await Log.forge({'id': 1}).fetch({withRelated: 'cycle'})
+  const two = await Log.forge({'id': 2}).fetch({withRelated: 'cycle'})
+  const three = await Log.forge({'id': 3}).fetch({withRelated: 'cycle'})
 
-  t.is(one, 0)
-  t.is(two, 2)
-  t.is(three, 2)
+  t.is(typeof one, 'object')
+  t.is(typeof two, 'object')
+  t.is(typeof three, 'object')
+
+  t.is(one.related('cycle').get('status'), 'FINISH')
+  t.is(two.related('cycle').get('status'), 'FINISH')
+  t.is(three.related('cycle').get('status'), 'ERROR')
 })

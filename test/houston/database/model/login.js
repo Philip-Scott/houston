@@ -1,6 +1,6 @@
 /**
- * test/houston/database/model/cycle.js
- * Tests the cycle model
+ * test/houston/database/model/login.js
+ * Tests the login model
  */
 
 import mock from 'mock-require'
@@ -27,23 +27,27 @@ test.beforeEach('setup configuration mock', async (t) => {
 })
 
 test.serial('can count', async (t) => {
-  const Cycle = t.context.models.Cycle
+  const Login = t.context.models.Login
 
-  const one = await Cycle.count()
-  const two = await Cycle.where('release_id', 1).count()
+  const one = await Login.count()
+  const two = await Login.where('user_id', 1).count()
 
-  t.is(one, 4)
+  t.is(one, 3)
   t.is(two, 2)
 })
 
-test.serial('has a good relationship with logs', async (t) => {
-  const Cycle = t.context.models.Cycle
+test.serial('has a good relationship with the user', async (t) => {
+  const Login = t.context.models.Login
 
-  const one = await Cycle.forge({'id': 1}).logs().count()
-  const two = await Cycle.forge({'id': 2}).logs().count()
-  const three = await Cycle.forge({'id': 3}).logs().count()
+  const one = await Login.forge({'id': 1}).fetch({withRelated: 'user'})
+  const two = await Login.forge({'id': 2}).fetch({withRelated: 'user'})
+  const three = await Login.forge({'id': 3}).fetch({withRelated: 'user'})
 
-  t.is(one, 0)
-  t.is(two, 2)
-  t.is(three, 2)
+  t.is(typeof one, 'object')
+  t.is(typeof two, 'object')
+  t.is(typeof three, 'object')
+
+  t.is(one.related('user').get('username'), 'btkostner')
+  t.is(two.related('user').get('username'), 'btkostner')
+  t.is(three.related('user').get('username'), 'rabbitbot')
 })

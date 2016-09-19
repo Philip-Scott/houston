@@ -33,4 +33,22 @@ export const Model = class extends Database.Model {
    * 2) Using standard bookshelf relationship asignments here for consistancy
    * 3) Keep it simple
    */
+
+  /**
+   * Helpers
+   * These should be quite obvious of what they are. They will be inherited by
+   * every other model, so make sure you don't hard set stuff.
+   */
+
+  /**
+   * semver
+   * Sorts the row based on semver versioning
+   *
+   * @param {String} field - the column name to sort on
+   * @param {String} style - which direction to sort
+   * @returns {Object} - bookshelf query object
+   */
+  static semver (field, style = 'ASC') {
+    // TODO: semver sorting mechanic
+  }
 }
