@@ -15,9 +15,9 @@
  */
 export function up (knex) {
   return knex.schema.createTableIfNotExists('logins', (table) => {
-    table.increments('key')
+    table.increments('id')
 
-    table.integer('user_key').notNullable().unsigned().references('key').inTable('users').onDelete('CASCADE')
+    table.integer('user_id').notNullable().unsigned().references('id').inTable('users').onDelete('CASCADE')
 
     table.string('service_name').notNullable()
     table.string('service_id').notNullable()

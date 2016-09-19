@@ -52,7 +52,7 @@ class Logins extends Base.Model {
    * @return {Object} - bookshelf relationship to the user modal
    */
   user () {
-    return this.belongsTo('Users')
+    return this.belongsTo('User', 'user_id')
   }
 }
 

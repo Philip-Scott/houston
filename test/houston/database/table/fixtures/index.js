@@ -1,5 +1,5 @@
 /**
- * test/houston/database/table/fixtures/migration/index.js
+ * test/houston/database/table/fixtures/index.js
  * Lists all migration tables
  *
  * @exports {Object} default - a list of tables

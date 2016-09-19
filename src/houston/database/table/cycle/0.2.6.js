@@ -15,10 +15,10 @@
  */
 export function up (knex) {
   return knex.schema.createTableIfNotExists('cycles', (table) => {
-    table.increments('key')
+    table.increments('id')
 
-    table.integer('project_key').notNullable().unsigned().references('key').inTable('projects').onDelete('CASCADE')
-    table.integer('release_key').unsigned().references('key').inTable('releases').onDelete('CASCADE')
+    table.integer('project_id').notNullable().unsigned().references('id').inTable('projects').onDelete('CASCADE')
+    table.integer('release_id').unsigned().references('id').inTable('releases').onDelete('CASCADE')
 
     table.enum('status', ['QUEUE', 'RUN', 'REVIEW', 'FINISH', 'FAIL', 'ERROR'])
     table.enum('type', ['release']).defaultTo('release')

@@ -37,21 +37,12 @@ class Cycles extends Base.Model {
    */
 
   /**
-   * parent
-   *
-   * @return {Object} - bookshelf relationship to the project or release modal
-   */
-  parent () {
-    return this.morphTo('cycles', 'Projects', 'Releases')
-  }
-
-  /**
    * issues
    *
    * @return {Object} - bookshelf relationship to the issue modal
    */
   issues () {
-    return this.hasMany('Issues')
+    return this.hasMany('Issue', 'cycle_id')
   }
 }
 

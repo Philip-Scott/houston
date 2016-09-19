@@ -42,7 +42,7 @@ class Issues extends Base.Model {
    * @return {Object} - bookshelf relationship to the project or release modal
    */
   cycle () {
-    return this.belongsTo('Cycle')
+    return this.belongsTo('Cycle', 'cycle_id')
   }
 }
 

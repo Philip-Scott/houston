@@ -15,7 +15,7 @@
  */
 export function up (knex) {
   return knex.schema.createTableIfNotExists('houston', (table) => {
-    table.increments('key')
+    table.increments('id')
 
     table.string('table_to')
     table.string('table_from')

@@ -11,13 +11,13 @@ import alias from 'root/.alias'
 
 import mockConfig from 'test/fixtures/config'
 
-const modalPath = path.resolve(alias.resolve.alias['houston'], 'database')
+const databasePath = path.resolve(alias.resolve.alias['houston'], 'database')
 
 test.beforeEach('setup configuration mock', async (t) => {
   mock(path.resolve(alias.resolve.alias['root'], 'config.js'), mockConfig)
 
   t.context.database = require(path.resolve(alias.resolve.alias['lib'], 'database'))
-  t.context.helpers = require(path.resolve(modalPath, 'table', 'helpers'))
+  t.context.helpers = require(path.resolve(databasePath, 'table', 'helpers'))
 
   await t.context.helpers.downAll(t.context.database.knex, '0.0.0')
   await t.context.helpers.upAll(t.context.database.knex)

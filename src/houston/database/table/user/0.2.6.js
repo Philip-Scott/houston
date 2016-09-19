@@ -15,7 +15,7 @@
  */
 export function up (knex) {
   return knex.schema.createTableIfNotExists('users', (table) => {
-    table.increments('key')
+    table.increments('id')
 
     table.string('username', 64)
     table.string('email')

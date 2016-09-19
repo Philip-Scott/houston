@@ -15,9 +15,9 @@
  */
 export function up (knex) {
   return knex.schema.createTableIfNotExists('releases', (table) => {
-    table.increments('key')
+    table.increments('id')
 
-    table.integer('project_key').notNullable().unsigned().references('key').inTable('projects').onDelete('CASCADE')
+    table.integer('project_id').notNullable().unsigned().references('id').inTable('projects').onDelete('CASCADE')
 
     table.string('service_id').notNullable()
 

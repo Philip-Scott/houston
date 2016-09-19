@@ -15,7 +15,7 @@
  */
 export function up (knex) {
   return knex.schema.createTableIfNotExists('projects', (table) => {
-    table.increments('key')
+    table.increments('id')
 
     table.string('service_name').notNullable()
     table.string('service_id').notNullable()

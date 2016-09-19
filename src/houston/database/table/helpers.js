@@ -37,7 +37,7 @@ export async function currentVersion (knex) {
     return '0.0.0'
   }
 
-  const updates = await knex.select('table_to').from('houston').orderBy('key', 'desc').limit(1)
+  const updates = await knex.select('table_to').from('houston').orderBy('id', 'desc').limit(1)
 
   if (updates.length === 0) {
     log.debug('Database includes houston table, but no rows exist')
