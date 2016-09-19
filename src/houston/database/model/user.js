@@ -32,6 +32,16 @@ class Users extends Base.Model {
   }
 
   /**
+   * hidden
+   *
+   * @return {String}[] - files to be hidden on toJSON
+   */
+  get hidden () {
+    // Just to be safe we remove the timestamps as well
+    return ['email', 'time_updated', 'time_used']
+  }
+
+  /**
    * Relationships
    * @link http://bookshelfjs.org/#associations
    */

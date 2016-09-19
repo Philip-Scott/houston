@@ -1,6 +1,7 @@
 /**
  * houston/database/table/helpers.js
  * Aggregates database table migration to smaller functions for easier working
+ * TODO: make houston table track migrations on a per table basis
  *
  * @exports {Function} currentVersion - grabs current semver version of database
  * @exports {Function} getUpdates - grabs all needed upgrades for a table

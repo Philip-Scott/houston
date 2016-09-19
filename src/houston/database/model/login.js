@@ -32,6 +32,16 @@ class Logins extends Base.Model {
   }
 
   /**
+   * hidden
+   *
+   * @return {String}[] - files to be hidden on toJSON
+   */
+  get hidden () {
+    // Just to be safe we remove the timestamps as well
+    return ['service_access', 'service_refresh', 'time_updated', 'time_used']
+  }
+
+  /**
    * Relationships
    * @link http://bookshelfjs.org/#associations
    */

@@ -17,11 +17,11 @@ export function up (knex) {
   return knex.schema.createTableIfNotExists('cycles', (table) => {
     table.increments('key')
 
-    table.string('repo')
-    table.string('tag')
-    table.string('version')
+    table.integer('project_key').notNullable().unsigned().references('key').inTable('projects').onDelete('CASCADE')
+    table.integer('release_key').unsigned().references('key').inTable('releases').onDelete('CASCADE')
+
     table.enum('status', ['QUEUE', 'RUN', 'REVIEW', 'FINISH', 'FAIL', 'ERROR'])
-    table.enum('type', ['release'])
+    table.enum('type', ['release']).defaultTo('release')
 
     table.timestamp('time_created').defaultTo(knex.fn.now())
     table.timestamp('time_ran')

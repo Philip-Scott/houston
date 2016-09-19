@@ -1,13 +1,12 @@
 /**
  * test/houston/database/modal/user.js
- * Tests modal usage for users
+ * Tests users table for needed fields
  */
 
 import mock from 'mock-require'
 import path from 'path'
 import test from 'ava'
 
-import * as helpers from 'houston/database/table/helpers'
 import alias from 'root/.alias'
 
 import mockConfig from 'test/fixtures/config'
@@ -18,11 +17,10 @@ test.beforeEach('setup configuration mock', async (t) => {
   mock(path.resolve(alias.resolve.alias['root'], 'config.js'), mockConfig)
 
   t.context.database = require(path.resolve(alias.resolve.alias['lib'], 'database'))
-  t.context.table = require(path.resolve(modalPath, 'table', 'helpers'))
-  t.context.user = require(path.resolve(modalPath, 'modal', 'user')).default
+  t.context.helpers = require(path.resolve(modalPath, 'table', 'helpers'))
 
-  await helpers.downAll(t.context.database.knex, '0.0.0')
-  await t.context.table.up(t.context.database.knex, 'user')
+  await t.context.helpers.downAll(t.context.database.knex, '0.0.0')
+  await t.context.helpers.upAll(t.context.database.knex)
 })
 
 test('has necessary table columns', async (t) => {
