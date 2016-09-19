@@ -22,7 +22,7 @@ export function up (knex) {
     table.string('service_id').notNullable()
 
     table.string('tag').notNullable()
-    table.string('version')
+    table.string('version').notNullable()
     table.string('author')
 
     table.timestamp('time_created')

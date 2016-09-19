@@ -6,6 +6,11 @@
  */
 
 export default {
+  'users': require('./users').default,
+  'logins': require('./logins').default,
+
+  'projects': require('./projects').default,
+  'releases': require('./releases').default,
   'cycles': require('./cycles').default,
   'logs': require('./logs').default
 }
