@@ -19,7 +19,7 @@ export default function (obj) {
   return {
     'id': new Validation(obj['id'], 'invalid_id').notNull().isInt().value,
 
-    'project_id': new Validation(obj['project_id'], 'Invalid project_id').notNull().value,
+    'project_id': new Validation(obj['project_id'], 'Invalid project_id').notNull().isInt().value,
     'release_id': new Validation(obj['release_id'], 'Invalid release_id').isInt().value,
 
     'status': new Validation(obj['status'], 'Invalid status').isIn(['QUEUE', 'RUN', 'REVIEW', 'FINISH', 'FAIL', 'ERROR']).value,
