@@ -21,7 +21,7 @@ export function up (knex) {
     table.integer('release_id').unsigned().references('id').inTable('releases').onDelete('CASCADE')
 
     table.enum('status', ['QUEUE', 'RUN', 'REVIEW', 'FINISH', 'FAIL', 'ERROR'])
-    table.enum('type', ['release']).defaultTo('release')
+    table.enum('type', ['RELEASE']).defaultTo('RELEASE')
 
     table.timestamp('time_created').defaultTo(knex.fn.now())
     table.timestamp('time_ran')

@@ -77,7 +77,7 @@ class Releases extends Base.Model {
   async status () {
     const cycle = await Cycle.forge({
       'release_id': this.get('id'),
-      'type': 'release'
+      'type': 'RELEASE'
     })
     .orderBy('id', 'DESC')
     .fetch({ columns: ['status'] })
