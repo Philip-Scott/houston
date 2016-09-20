@@ -9,7 +9,7 @@ export default [{
   'id': 1,
 
   'service_name': 'github',
-  'service_id': 1,
+  'service_id': '1',
 
   'name': 'houston',
   'address': 'com.github.elementary.houston',
@@ -23,7 +23,7 @@ export default [{
   'id': 2,
 
   'service_name': 'github',
-  'service_id': 2,
+  'service_id': '2',
 
   'name': 'houston',
   'address': 'com.github.elementary.vocal',

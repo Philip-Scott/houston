@@ -76,7 +76,7 @@ test.serial('has an accurate create function', async (t) => {
 
   const one = await Project.create({
     'service_name': 'github',
-    'service_id': 0,
+    'service_id': '0',
 
     'name': 'testing',
     'address': 'com.github.elementary.testing',
@@ -91,9 +91,49 @@ test.serial('has an accurate create function', async (t) => {
   t.is(typeof one.get('id'), 'number')
 
   // NOTE: we use pure knex here so we don't rely on other functions being tested
-  const two = await knex.select('address').from('projects').where('service_id', 0)
+  const two = await knex.select('*').from('projects').where('id', one.get('id'))
 
+  t.is(two[0]['name'], 'testing')
   t.is(two[0]['address'], 'com.github.elementary.testing')
+  t.is(two[0]['time_created'], date.getTime())
 })
 
-test.serial.todo('Test update function')
+test.serial('has an accurate update function', async (t) => {
+  const knex = t.context.database.knex
+  const Project = t.context.models.Project
+
+  const date = new Date()
+
+  // NOTE: we are going to use a tested function. If create() fails, this test
+  // will also fail
+  const one = await Project.create({
+    'service_name': 'github',
+    'service_id': '0',
+
+    'name': 'testing',
+    'address': 'com.github.elementary.testing',
+    'type': 'application',
+
+    'repository': 'https://github.com/elementary/testing.git',
+    'tag': 'master',
+
+    'time_created': date
+  })
+
+  t.is(typeof one.get('id'), 'number')
+
+  const two = await one.update({
+    'name': 'testing update',
+    'address': 'com.github.elementary.testing_update'
+  })
+
+  t.is(typeof two.get('id'), 'number')
+  t.is(one, two)
+
+  const three = await knex.select('*').from('projects').where('id', two.get('id'))
+
+  t.is(three[0]['service_name'], 'github')
+  t.is(three[0]['service_id'], '0')
+  t.is(three[0]['name'], 'testing update')
+  t.is(three[0]['address'], 'com.github.elementary.testing_update')
+})

@@ -107,11 +107,10 @@ export const Model = class extends Database.Model {
    * @param {Object} options - options to send to the fetchAll function
    * @returns {Object} - a bookshelf model or null if not found
    */
-  static update (data, options = {}) {
+  update (data, options = {}) {
+    if (this.id == null) throw new Error('Unable to update record without ID')
     options = Object.assign({ patch: true, require: true }, options)
-    return this.forge({ id: data.id }).fetch(options).then((m) => {
-      if (m == null) return null
-      return m.save(data, options)
-    })
+
+    return this.save(data, options)
   }
 }
