@@ -10,6 +10,7 @@
 import Database from 'lib/database'
 
 import * as Base from './base'
+import Release from './release'
 
 /**
  * Projects
@@ -25,6 +26,23 @@ class Projects extends Base.Model {
    * @return {String} - the table name
    */
   get tableName () { return 'projects' }
+
+  /**
+   * status
+   *
+   * @return {String} - status of latest release cycle
+   */
+  async status () {
+    const release = await Release.forge({ 'project_id': this.get('id') })
+    .orderBy('version_major', 'DESC')
+    .orderBy('version_minor', 'DESC')
+    .orderBy('version_patch', 'DESC')
+    .fetch()
+
+    if (release == null || release.id == null) return 'UNRELEASED'
+
+    return release.status()
+  }
 
   /**
    * releases

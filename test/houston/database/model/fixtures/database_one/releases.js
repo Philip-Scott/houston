@@ -55,13 +55,28 @@ export default [{
 
   'project_id': 1,
 
-  'service_id': 3,
+  'service_id': 4,
 
   'tag': 'v1.2.0',
   'author': 'btkostner',
 
   'version_major': 1,
   'version_minor': 2,
+  'version_patch': 0,
+
+  'time_created': new Date()
+}, {
+  'id': 5,
+
+  'project_id': 1,
+
+  'service_id': 5,
+
+  'tag': 'v2.1.0',
+  'author': 'btkostner',
+
+  'version_major': 2,
+  'version_minor': 1,
   'version_patch': 0,
 
   'time_created': new Date()

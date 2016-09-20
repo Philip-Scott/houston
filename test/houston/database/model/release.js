@@ -33,7 +33,7 @@ test.serial('can count', async (t) => {
   const one = await Release.count()
   const two = await Release.where('service_id', 2).count()
 
-  t.is(one, 4)
+  t.is(one, 5)
   t.is(two, 1)
 })
 
@@ -111,4 +111,17 @@ test.serial('has a valid set version virtual', async (t) => {
 
   t.is(one.get('version'), '1.0.1')
   t.is(two.get('version'), '1.1.9')
+})
+
+test.serial('can get correct status', async (t) => {
+  const Release = t.context.models.Release
+
+  const one = await Release.findById(1)
+  const two = await Release.findById(2)
+
+  const three = await one.status()
+  const four = await two.status()
+
+  t.is(three, 'FINISH')
+  t.is(four, 'ERROR')
 })

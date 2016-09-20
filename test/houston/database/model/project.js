@@ -45,7 +45,7 @@ test.serial('has a good relationship with releases', async (t) => {
   t.is(typeof one, 'object')
   t.is(typeof two, 'object')
 
-  t.is(one.related('releases').length, 4)
+  t.is(one.related('releases').length, 5)
   t.is(two.related('releases').length, 0)
 })
 
@@ -60,4 +60,17 @@ test.serial('has a good relationship with cycles', async (t) => {
 
   t.is(one.related('cycles').length, 4)
   t.is(two.related('cycles').length, 0)
+})
+
+test.serial('can get correct status', async (t) => {
+  const Project = t.context.models.Project
+
+  const one = await Project.findById(1)
+  const two = await Project.findById(2)
+
+  const three = await one.status()
+  const four = await two.status()
+
+  t.is(three, 'UNCYCLED')
+  t.is(four, 'UNRELEASED')
 })

@@ -12,6 +12,7 @@ import semver from 'semver'
 import Database from 'lib/database'
 
 import * as Base from './base'
+import Cycle from './cycle'
 
 /**
  * Releases
@@ -66,6 +67,23 @@ class Releases extends Base.Model {
     }
 
     return { version }
+  }
+
+  /**
+   * status
+   *
+   * @return {String} - status of latest release cycle
+   */
+  async status () {
+    const cycle = await Cycle.forge({
+      'release_id': this.get('id'),
+      'type': 'release'
+    })
+    .orderBy('id', 'DESC')
+    .fetch({ columns: ['status'] })
+
+    if (cycle == null || cycle.length < 1) return 'UNCYCLED'
+    return cycle.get('status')
   }
 
   /**
