@@ -147,9 +147,7 @@ export default class Validation {
    * isIn
    * Checks if value exists in array
    *
-   * @link https://lodash.com/docs/4.16.0#find
-   *
-   * @param {String}[] list - a list to check in
+   * @param {Array} list - a list to check in
    * @returns {Object} - this
    */
   isIn (list = []) {
