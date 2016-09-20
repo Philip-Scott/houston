@@ -36,34 +36,6 @@ const cycleValue = (key, value) => {
   })
 }
 
-test('it checks for required values', (t) => {
-  const one = {
-    'id': 1,
-    'project_id': 1,
-    'time_created': new Date()
-  }
-  const two = {
-    'id': null,
-    'project_id': 1,
-    'time_created': new Date()
-  }
-  const three = {
-    'id': 1,
-    'project_id': null,
-    'time_created': new Date()
-  }
-  const four = {
-    'id': 1,
-    'project_id': 1,
-    'time_created': null
-  }
-
-  t.notThrows(() => Validate(one))
-  t.throws(() => Validate(two), helpers.isValidationError)
-  t.throws(() => Validate(three), helpers.isValidationError)
-  t.throws(() => Validate(four), helpers.isValidationError)
-})
-
 test('it checks for valid ID', (t) => {
   const one = cycleValue('id', 1)
   const two = cycleValue('id', '1')

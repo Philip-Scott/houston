@@ -31,7 +31,6 @@ export default function (obj) {
     'tag': new Validation(obj['tag'], 'Invalid tag').notNull(true).isString().value,
 
     'time_created': new Validation(obj['time_created'], 'Invalid time_created').notNull(true).isDate().value,
-    'time_added': new Validation(obj['time_added'], 'Invalid time_added').notNull(true).isDate().value,
-    'time_published': new Validation(obj['time_published'], 'Invalid time_published').isDate().value
+    'time_added': new Validation(obj['time_added'], 'Invalid time_added').notNull(true).isDate().value
   }
 }

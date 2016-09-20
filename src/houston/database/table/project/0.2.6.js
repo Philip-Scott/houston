@@ -30,7 +30,6 @@ export function up (knex) {
 
     table.timestamp('time_created')
     table.timestamp('time_added').defaultTo(knex.fn.now())
-    table.timestamp('time_published')
   })
 }
 

@@ -37,58 +37,6 @@ const loginValue = (key, value) => {
   })
 }
 
-test('it checks for required values', (t) => {
-  const one = {
-    'id': 1,
-    'user_id': 1,
-    'service_name': 'github',
-    'service_id': '1',
-    'time_created': new Date()
-  }
-  const two = {
-    'id': null,
-    'user_id': 1,
-    'service_name': 'github',
-    'service_id': '1',
-    'time_created': new Date()
-  }
-  const three = {
-    'id': 1,
-    'user_id': null,
-    'service_name': 'github',
-    'service_id': '1',
-    'time_created': new Date()
-  }
-  const four = {
-    'id': 1,
-    'user_id': 1,
-    'service_name': null,
-    'service_id': '1',
-    'time_created': new Date()
-  }
-  const five = {
-    'id': 1,
-    'user_id': 1,
-    'service_name': 'github',
-    'service_id': null,
-    'time_created': new Date()
-  }
-  const six = {
-    'id': 1,
-    'user_id': 1,
-    'service_name': 'github',
-    'service_id': '1',
-    'time_created': null
-  }
-
-  t.notThrows(() => Validate(one))
-  t.throws(() => Validate(two), helpers.isValidationError)
-  t.throws(() => Validate(three), helpers.isValidationError)
-  t.throws(() => Validate(four), helpers.isValidationError)
-  t.throws(() => Validate(five), helpers.isValidationError)
-  t.throws(() => Validate(six), helpers.isValidationError)
-})
-
 test('it checks for valid ID', (t) => {
   const one = loginValue('id', 1)
   const two = loginValue('id', '1')

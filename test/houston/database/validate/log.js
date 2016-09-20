@@ -36,45 +36,6 @@ const logValue = (key, value) => {
   })
 }
 
-test('it checks for required values', (t) => {
-  const one = {
-    'id': 1,
-    'cycle_id': 1,
-    'title': 'testing',
-    'time_created': new Date()
-  }
-  const two = {
-    'id': null,
-    'cycle_id': 1,
-    'title': 'testing',
-    'time_created': new Date()
-  }
-  const three = {
-    'id': 1,
-    'cycle_id': null,
-    'title': 'testing',
-    'time_created': new Date()
-  }
-  const four = {
-    'id': 1,
-    'cycle_id': 1,
-    'title': null,
-    'time_created': new Date()
-  }
-  const five = {
-    'id': 1,
-    'cycle_id': 1,
-    'title': 'testing',
-    'time_created': null
-  }
-
-  t.notThrows(() => Validate(one))
-  t.throws(() => Validate(two), helpers.isValidationError)
-  t.throws(() => Validate(three), helpers.isValidationError)
-  t.throws(() => Validate(four), helpers.isValidationError)
-  t.throws(() => Validate(five), helpers.isValidationError)
-})
-
 test('it checks for valid ID', (t) => {
   const one = logValue('id', 1)
   const two = logValue('id', '1')
