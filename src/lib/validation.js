@@ -33,7 +33,10 @@ export default class Validation {
 
     this.isRequired = false
 
-    this.failures = []
+    this.failures = {
+      optional: [],
+      required: []
+    }
   }
 
   /**
@@ -66,7 +69,11 @@ export default class Validation {
    * @throws {Validation.Error} - if a non optional test fails
    */
   fail (msg, fn) {
-    this.failures.push(fn)
+    if (this.isRequired) {
+      this.failures['required'].push([msg, fn])
+    } else {
+      this.failures['optional'].push([msg, fn])
+    }
 
     if (!this.isRequired) return
 
@@ -89,12 +96,21 @@ export default class Validation {
    * Checks if value is null or undefined. Also sets all next tests to be
    * required. (opposite of optional())
    *
+   * @param {Boolean} strict - if true items like 0 and no length strings will fail
    * @returns {Object} - this
    */
-  notNull () {
+  notNull (strict = false) {
     this.isRequired = true
 
+    this.failures['required'].forEach((failure) => {
+      this.fail(...failure)
+    })
+
     if (this.value == null) this.fail('Null value', 'notNull')
+    if (strict && this.value.length != null && this.value.length < 1) this.fail('Empty object', 'notNull')
+    if (strict && _.isPlainObject(this.value) && _.isEmpty(this.value)) this.fail('Empty object', 'notNull')
+    if (strict && this.value === '') this.fail('Empty string', 'notNull')
+    if (strict && this.value === 0) this.fail('Zero value', 'notNull')
 
     return this
   }
@@ -117,6 +133,31 @@ export default class Validation {
 
     if (typeof this.value !== 'number') this.fail('Not an integer', 'isInt')
     if (isNaN(this.value)) this.fail('Not an integer', 'isInt')
+
+    return this
+  }
+
+  /**
+   * isString
+   * Checks if string value
+   *
+   * @param {Boolean} strict - if true will not try to parse
+   * @returns {Object} - this
+   */
+  isString (strict = false) {
+    // String function will take a lot of things, so lets rule out the obvious first
+    if (this.value == null) this.fail('Not a string', 'isString')
+    if (strict && typeof this.value === 'object') this.fail('Not a string', 'isString') // don't convert
+
+    if (!strict) {
+      try {
+        this.value = String(this.value)
+      } catch (e) {
+        this.fail('Not a string', 'isString')
+      }
+    }
+
+    if (typeof this.value !== 'string') this.fail('Not a string', 'isString')
 
     return this
   }

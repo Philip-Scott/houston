@@ -49,7 +49,7 @@ test('can set required and optional tests', (t) => {
   t.is(three.isRequired, true)
 })
 
-test('can check for null value', (t) => {
+test('can check for non strict null value', (t) => {
   t.throws(() => new Validation(null).notNull(), helpers.isValidationError)
   t.throws(() => new Validation(undefined).notNull(), helpers.isValidationError)
 
@@ -57,6 +57,16 @@ test('can check for null value', (t) => {
   t.notThrows(() => new Validation('null').notNull())
   t.notThrows(() => new Validation('undefined').notNull())
   t.notThrows(() => new Validation('1').notNull())
+})
+
+test('can check for strict null value', (t) => {
+  t.throws(() => new Validation(0).notNull(true), helpers.isValidationError)
+  t.throws(() => new Validation({}).notNull(true), helpers.isValidationError)
+  t.throws(() => new Validation([]).notNull(true), helpers.isValidationError)
+  t.throws(() => new Validation('').notNull(true), helpers.isValidationError)
+
+  t.notThrows(() => new Validation(1).notNull(true))
+  t.notThrows(() => new Validation('test').notNull(true))
 })
 
 test('can check for non strict integers', (t) => {
@@ -86,6 +96,28 @@ test('can check for strict integers', (t) => {
   t.notThrows(() => new Val(1).isInt(true))
   t.notThrows(() => new Val(0).isInt(true))
   t.notThrows(() => new Val(-1).isInt(true))
+})
+
+test('can check for non strict strings', (t) => {
+  t.throws(() => new Val(null).isString(), helpers.isValidationError)
+  t.throws(() => new Val(undefined).isString(), helpers.isValidationError)
+
+  t.notThrows(() => new Val(1).isString())
+  t.notThrows(() => new Val('testing').isString())
+  t.notThrows(() => new Val(new Date()).isString())
+
+  t.is(new Val(42).isString().value, '42')
+})
+
+test('can check for strict strings', (t) => {
+  t.throws(() => new Val(null).isString(), helpers.isValidationError)
+  t.throws(() => new Val(undefined).isString(), helpers.isValidationError)
+
+  t.notThrows(() => new Val(1).isString())
+  t.notThrows(() => new Val('testing').isString())
+  t.notThrows(() => new Val(new Date()).isString())
+
+  t.is(new Val(42).isString().value, '42')
 })
 
 test('can check for strict dates', (t) => {
