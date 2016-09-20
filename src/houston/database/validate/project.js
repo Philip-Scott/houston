@@ -1,6 +1,6 @@
 /**
- * houston/database/validate/login.js
- * Validates information to be entered into the login table
+ * houston/database/validate/project.js
+ * Validates information to be entered into the project table
  *
  * @exports {Function} default - validates an object
  */
@@ -9,7 +9,7 @@ import Validation from 'lib/validation'
 
 /**
  * default
- * Validates an object for the ability to be inserted to login table. It also
+ * Validates an object for the ability to be inserted to project table. It also
  * sanatized / normalized data between Houston and the database
  *
  * @param  {Object} obj - the data to clean and validate

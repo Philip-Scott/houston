@@ -36,7 +36,7 @@ const logValue = (key, value) => {
   })
 }
 
-test('it checks for valid ID', (t) => {
+test('it checks for valid id', (t) => {
   const one = logValue('id', 1)
   const two = logValue('id', '1')
   const three = logValue('id', 'one')

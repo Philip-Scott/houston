@@ -37,7 +37,7 @@ const loginValue = (key, value) => {
   })
 }
 
-test('it checks for valid ID', (t) => {
+test('it checks for valid is', (t) => {
   const one = loginValue('id', 1)
   const two = loginValue('id', '1')
   const three = loginValue('id', 'one')

@@ -36,7 +36,7 @@ const cycleValue = (key, value) => {
   })
 }
 
-test('it checks for valid ID', (t) => {
+test('it checks for valid id', (t) => {
   const one = cycleValue('id', 1)
   const two = cycleValue('id', '1')
   const three = cycleValue('id', 'one')

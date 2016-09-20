@@ -40,7 +40,7 @@ const projectValue = (key, value) => {
   })
 }
 
-test('it checks for valid ID', (t) => {
+test('it checks for valid id', (t) => {
   const one = projectValue('id', 1)
   const two = projectValue('id', '1')
   const three = projectValue('id', 'one')
