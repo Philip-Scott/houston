@@ -17,7 +17,7 @@ import Validation from 'lib/validation'
  */
 export default function (obj) {
   return {
-    'id': new Validation(obj['id'], 'invalid_id').notNull(true).isInt().value,
+    'id': new Validation(obj['id'], 'invalid id').notNull(true).isInt().value,
 
     'project_id': new Validation(obj['project_id'], 'Invalid project_id').notNull(true).isInt().value,
     'release_id': new Validation(obj['release_id'], 'Invalid release_id').isInt().value,

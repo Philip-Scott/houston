@@ -164,6 +164,23 @@ export default class Validation {
   }
 
   /**
+   * isBoolean
+   * Checks if boolean
+   *
+   * @param {Boolean} strict - if true will not try to parse
+   * @returns {Object} - this
+   */
+  isBoolean (strict = true) {
+    if (!strict) {
+      this.value = Boolean(this.value)
+    }
+
+    if (this.value !== true && this.value !== false) this.fail('Not a boolean', 'isBoolean')
+
+    return this
+  }
+
+  /**
    * isDate
    * Checks if a valid date object
    *

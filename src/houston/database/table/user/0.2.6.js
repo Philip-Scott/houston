@@ -17,8 +17,8 @@ export function up (knex) {
   return knex.schema.createTableIfNotExists('users', (table) => {
     table.increments('id')
 
-    table.string('username', 64)
-    table.string('email')
+    table.string('username', 64).notNullable().unique().index()
+    table.string('email').notNullable()
     table.string('avatar')
 
     table.boolean('right_review').defaultTo(false)

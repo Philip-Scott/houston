@@ -120,6 +120,32 @@ test('can check for strict strings', (t) => {
   t.is(new Val(42).isString().value, '42')
 })
 
+test('can check for strict booleans', (t) => {
+  t.throws(() => new Val('false').isBoolean(), helpers.isValidationError)
+  t.throws(() => new Val('true').isBoolean(), helpers.isValidationError)
+  t.throws(() => new Val(0).isBoolean(), helpers.isValidationError)
+  t.throws(() => new Val(1).isBoolean(), helpers.isValidationError)
+  t.throws(() => new Val('nope').isBoolean(), helpers.isValidationError)
+  t.throws(() => new Val(null).isBoolean(), helpers.isValidationError)
+
+  t.notThrows(() => new Val(true).isBoolean())
+  t.notThrows(() => new Val(false).isBoolean())
+
+  t.true(new Val(true).isBoolean().value, true)
+})
+
+test('can check for non strict booleans', (t) => {
+  t.notThrows(() => new Val(true).isBoolean(false))
+  t.notThrows(() => new Val(false).isBoolean(false))
+  t.notThrows(() => new Val('false').isBoolean(false))
+  t.notThrows(() => new Val('true').isBoolean(false))
+  t.notThrows(() => new Val(null).isBoolean(false))
+
+  t.true(new Val('true').isBoolean(false).value)
+  t.true(new Val('false').isBoolean(false).value) // yes, this is normal
+  t.false(new Val(null).isBoolean(false).value)
+})
+
 test('can check for strict dates', (t) => {
   t.throws(() => new Val('not a date').isDate(true), helpers.isValidationError)
   t.throws(() => new Val().isDate(true), helpers.isValidationError)
