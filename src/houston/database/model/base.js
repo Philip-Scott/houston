@@ -39,4 +39,79 @@ export const Model = class extends Database.Model {
    * These should be quite obvious of what they are. They will be inherited by
    * every other model, so make sure you don't hard set stuff.
    */
+
+  /**
+   * Crude functions
+   * While these functions are small, they should be helpfull filling the bridge
+   * of bookshelf. Most code taken from bookshelf modelbase
+   * @link https://github.com/bsiddiqui/bookshelf-modelbase/blob/master/lib/index.js
+   */
+
+  /**
+   * find
+   * Finds rows in the database
+   *
+   * @param {Object} filter - rows to filter
+   * @param {Object} options - options to send to the fetchAll function
+   * @returns {Object}[] - bookshelf model of a list of rows matching
+   */
+  static find (filter = {}, options = {}) {
+    filter = Object.assign({}, filter)
+
+    return this.where(filter).fetchAll(options)
+  }
+
+  /**
+   * findOne
+   * Finds a single row in the database
+   *
+   * @param {Object} filter - object to filter from in database
+   * @param {Object} options - options to send to the fetch function
+   * @returns {Object} - bookshelf model of a matching row or null for nothing
+   */
+  static findOne (filter = {}, options = {}) {
+    options = Object.assign({ require: true }, options)
+    return this.forge(filter).fetch(options)
+  }
+
+  /**
+   * findById
+   * Finds single row in the database by ID
+   *
+   * @param {Number} id - id of row to find
+   * @param {Object} options - options to send to the fetch function
+   * @returns {Object} - bookshelf model of a row or null for nothing
+   */
+  static findById (id, options = {}) {
+    id = Math.abs(parseInt(id))
+    return this.findOne({ id }, options)
+  }
+
+  /**
+   * create
+   * Creates a new record
+   *
+   * @param {Object} data - data to put in database
+   * @param {Object} options - options to send to the fetchAll function
+   * @returns {Object} - a bookshelf model
+   */
+  static create (data, options = {}) {
+    return this.forge(data).save(null, options)
+  }
+
+  /**
+   * update
+   * Updates an existing record
+   *
+   * @param {Object} data - data to put in database
+   * @param {Object} options - options to send to the fetchAll function
+   * @returns {Object} - a bookshelf model or null if not found
+   */
+  static update (data, options = {}) {
+    options = Object.assign({ patch: true, require: true }, options)
+    return this.forge({ id: data.id }).fetch(options).then((m) => {
+      if (m == null) return null
+      return m.save(data, options)
+    })
+  }
 }
