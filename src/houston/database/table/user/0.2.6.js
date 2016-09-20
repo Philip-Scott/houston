@@ -26,7 +26,6 @@ export function up (knex) {
 
     table.timestamp('time_created').defaultTo(knex.fn.now())
     table.timestamp('time_updated')
-    table.timestamp('time_used')
   })
 }
 

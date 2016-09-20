@@ -30,7 +30,6 @@ export default function (obj) {
     'right_admin': new Validation(obj['right_admin']).notNull(true).isBoolean().value,
 
     'time_created': new Validation(obj['time_created'], 'Invalid time_created').notNull(true).isDate().value,
-    'time_updated': new Validation(obj['time_updated'], 'Invalid time_updated').isDate().value,
-    'time_used': new Validation(obj['time_used'], 'Invalid time_used').isDate().value
+    'time_updated': new Validation(obj['time_updated'], 'Invalid time_updated').isDate().value
   }
 }
