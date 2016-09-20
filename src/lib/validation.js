@@ -10,6 +10,7 @@ import _ from 'lodash'
 /**
  * Validates values
  * Usage: new Validator('a value', 'invalid value').isInt()
+ * TODO: add url validation
  *
  * @param {*} arg - the argument to test
  * @param {String} message - the message to put on error if failed
@@ -195,6 +196,42 @@ export default class Validation {
     if (!_.isArray(list)) throw new Error('isIn was given a non array to check in')
 
     if (list.indexOf(this.value) === -1) this.fail('Not included in sample', 'isIn')
+
+    return this
+  }
+
+  /**
+   * isRDNN
+   * Checks if value is valid reverse domain name notation
+   *
+   * @param {Number} min - the minimum number of parts in the RDNN
+   * @returns {Object} - this
+   */
+  isRDNN (min = 3) {
+    this.isString(true)
+
+    const parts = this.value.split('.')
+    if (parts.length < 1 || parts.length < min) this.fail('Not valid RDNN', 'isRDNN')
+
+    this.value = parts.map((value) => value.replace(/[`~!@#$%^&*()_|+=?;:'",<>\{\}\[\]\\\/`\s]/gi, '-')).join('.')
+
+    return this
+  }
+
+  /**
+   * isURL
+   * Checks if value could POSSIBLY be a url with full protocol
+   *
+   * @param {String} protos - a list of valid protocols
+   * @returns {Object} - this
+   */
+  isURL (protos = ['http', 'https']) {
+    this.isString(true)
+
+    if (!/:\/\//.test(this.value)) this.fail('Does not include protocol', 'isURL')
+
+    const [proto] = this.value.split('://')
+    if (protos.indexOf(proto) === -1) this.fail('Is not in list of valid protocols', 'isURL')
 
     return this
   }

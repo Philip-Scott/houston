@@ -150,3 +150,34 @@ test('can check for values in list', (t) => {
   t.notThrows(() => new Val(null).isIn([1, null, 3]))
   t.notThrows(() => new Val('t').isIn(['a', 't', 'c']))
 })
+
+test('can check for valid RDNN', (t) => {
+  t.throws(() => new Val('com.github').isRDNN(), helpers.isValidationError)
+  t.throws(() => new Val(null).isRDNN(), helpers.isValidationError)
+  t.throws(() => new Val('com.github.elementary.houston').isRDNN(5), helpers.isValidationError)
+  t.throws(() => new Val('evil SQL statement\') DROP ALL;').isRDNN())
+
+  t.notThrows(() => new Val('com.github').isRDNN(2))
+  t.notThrows(() => new Val('com.github.elementary.houston').isRDNN())
+  t.notThrows(() => new Val('com.repo.personal.project').isRDNN())
+})
+
+test('sanatizes RDNN', (t) => {
+  const one = new Val('com.github.weird_repo#@.3e1t!repo').isRDNN()
+  const two = new Val('com.github.hahaha_(){#$#}\'t.repo').isRDNN()
+
+  t.is(one.value, 'com.github.weird-repo--.3e1t-repo')
+  t.is(two.value, 'com.github.hahaha---------t.repo')
+})
+
+test('can check for possible url', (t) => {
+  t.throws(() => new Val('github.com').isURL(), helpers.isValidationError)
+  t.throws(() => new Val(null).isURL(), helpers.isValidationError)
+  t.throws(() => new Val('https//google.com').isURL(), helpers.isValidationError)
+  t.throws(() => new Val('obviously not a url').isURL())
+  t.throws(() => new Val('nope://hahaha.co').isURL())
+
+  t.notThrows(() => new Val('https://github.com').isURL())
+  t.notThrows(() => new Val('http://www.google.com/project/repo.git').isURL())
+  t.notThrows(() => new Val('ftp://repo.co').isURL(['ftp']))
+})
