@@ -7,6 +7,8 @@
  * @exports {Object} default - database model for releases
  */
 
+import semver from 'semver'
+
 import Database from 'lib/database'
 
 import * as Base from './base'
@@ -25,6 +27,46 @@ class Releases extends Base.Model {
    * @return {String} - the table name
    */
   get tableName () { return 'releases' }
+
+  /**
+   * virtuals
+   *
+   * @returns {Object} - all avalible virtuals
+   */
+  get virtuals () {
+    const version = {
+      /**
+       * version
+       * Returns a semver version of the current release
+       *
+       * @return {String} - current semver version
+       */
+      get: () => {
+        const major = this.get('version_major')
+        const minor = this.get('version_minor')
+        const patch = this.get('version_patch')
+
+        return semver.clean(`${major}.${minor}.${patch}`)
+      },
+
+      /**
+       * version
+       * Sets the semver version of release
+       *
+       * @param {String} v - a semver valid version to set
+       * @returns {Void}
+       */
+      set: (v) => {
+        if (semver.valid(v) == null) throw new Error('Version is not valid semver')
+
+        this.set('version_major', semver.major(v))
+        this.set('version_minor', semver.minor(v))
+        this.set('version_patch', semver.patch(v))
+      }
+    }
+
+    return { version }
+  }
 
   /**
    * project

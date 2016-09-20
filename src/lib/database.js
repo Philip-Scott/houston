@@ -16,6 +16,7 @@ export const knex = knexPkg(config.database)
 const bookshelf = bookshelfPkg(knex)
 
 bookshelf.plugin('registry')
+bookshelf.plugin('virtuals')
 bookshelf.plugin('visibility')
 
 export default bookshelf

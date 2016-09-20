@@ -39,8 +39,8 @@ test.serial('can count', async (t) => {
 test.serial('has a good relationship with releases', async (t) => {
   const Project = t.context.models.Project
 
-  const one = await Project.forge({'id': 1}).fetch({withRelated: 'releases'})
-  const two = await Project.forge({'id': 2}).fetch({withRelated: 'releases'})
+  const one = await Project.forge({ id: 1 }).fetch({withRelated: 'releases'})
+  const two = await Project.forge({ id: 2 }).fetch({withRelated: 'releases'})
 
   t.is(typeof one, 'object')
   t.is(typeof two, 'object')
@@ -52,8 +52,8 @@ test.serial('has a good relationship with releases', async (t) => {
 test.serial('has a good relationship with cycles', async (t) => {
   const Project = t.context.models.Project
 
-  const one = await Project.forge({'id': 1}).fetch({withRelated: 'cycles'})
-  const two = await Project.forge({'id': 2}).fetch({withRelated: 'cycles'})
+  const one = await Project.forge({ id: 1 }).fetch({withRelated: 'cycles'})
+  const two = await Project.forge({ id: 2 }).fetch({withRelated: 'cycles'})
 
   t.is(typeof one, 'object')
   t.is(typeof two, 'object')

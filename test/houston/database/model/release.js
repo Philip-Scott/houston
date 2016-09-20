@@ -50,9 +50,9 @@ test.serial('has a good relationship with the project', async (t) => {
 test.serial('has a good relationship with cycles', async (t) => {
   const Release = t.context.models.Release
 
-  const one = await Release.forge({'id': 1}).fetch({withRelated: 'cycles'})
-  const two = await Release.forge({'id': 2}).fetch({withRelated: 'cycles'})
-  const three = await Release.forge({'id': 3}).fetch({withRelated: 'cycles'})
+  const one = await Release.forge({ id: 1 }).fetch({withRelated: 'cycles'})
+  const two = await Release.forge({ id: 2 }).fetch({withRelated: 'cycles'})
+  const three = await Release.forge({ id: 3 }).fetch({withRelated: 'cycles'})
 
   t.is(typeof one, 'object')
   t.is(typeof two, 'object')
@@ -88,4 +88,27 @@ test.serial('can be ordered in semver', async (t) => {
     const b = twoOrder[i + 1]
     t.true(semver.gt(a, b))
   })
+})
+
+test.serial('has a valid get version virtual', async (t) => {
+  const Release = t.context.models.Release
+
+  const one = await Release.forge({ id: 1 }).fetch()
+  const two = await Release.forge({ id: 2 }).fetch()
+
+  t.is(one.get('version'), '1.0.0')
+  t.is(two.get('version'), '1.1.0')
+})
+
+test.serial('has a valid set version virtual', async (t) => {
+  const Release = t.context.models.Release
+
+  const one = await Release.forge({ id: 1 }).fetch()
+  const two = await Release.forge({ id: 2 }).fetch()
+
+  one.set('version', '1.0.1')
+  two.set('version', '1.1.9')
+
+  t.is(one.get('version'), '1.0.1')
+  t.is(two.get('version'), '1.1.9')
 })

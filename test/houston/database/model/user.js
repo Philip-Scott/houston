@@ -39,8 +39,8 @@ test.serial('can count', async (t) => {
 test.serial('has a good relationship with the cycle', async (t) => {
   const User = t.context.models.User
 
-  const one = await User.forge({'id': 1}).fetch({withRelated: 'logins'})
-  const two = await User.forge({'id': 2}).fetch({withRelated: 'logins'})
+  const one = await User.forge({ id: 1 }).fetch({withRelated: 'logins'})
+  const two = await User.forge({ id: 2 }).fetch({withRelated: 'logins'})
 
   t.is(typeof one, 'object')
   t.is(typeof two, 'object')
