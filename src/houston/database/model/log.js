@@ -10,6 +10,7 @@
 import Database from 'lib/database'
 
 import * as Base from './base'
+import validate from 'houston/database/validate/log'
 
 /**
  * Logs
@@ -25,6 +26,14 @@ class Logs extends Base.Model {
    * @return {String} - the table name
    */
   get tableName () { return 'logs' }
+
+  /**
+   * validate
+   * Returns a function to validate data
+   *
+   * @return {Function} - validates objects to be put in logs table
+   */
+  static get validator () { return validate }
 
   /**
    * parent

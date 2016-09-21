@@ -10,6 +10,7 @@
 import Database from 'lib/database'
 
 import * as Base from './base'
+import validate from 'houston/database/validate/cycle'
 
 /**
  * Cycles
@@ -25,6 +26,14 @@ class Cycles extends Base.Model {
    * @return {String} - the table name
    */
   get tableName () { return 'cycles' }
+
+  /**
+   * validate
+   * Returns a function to validate data
+   *
+   * @return {Function} - validates objects to be put in cycles table
+   */
+  static get validator () { return validate }
 
   /**
    * logs

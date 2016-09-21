@@ -165,6 +165,12 @@ test('can check for non strict dates', (t) => {
   t.notThrows(() => new Val(new Date(123456)).isDate())
   t.notThrows(() => new Val(123456).isDate())
   t.notThrows(() => new Val('123456').isDate())
+
+  const one = new Val(123456).optional().isDate()
+  const two = new Val('nope').optional().isDate()
+
+  t.is(one.value.getTime(), 123456)
+  t.is(two.value, null)
 })
 
 test('can check for values in list', (t) => {

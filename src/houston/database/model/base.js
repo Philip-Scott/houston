@@ -41,6 +41,24 @@ export const Model = class extends Database.Model {
    */
 
   /**
+   * validate
+   * Validates an object to be added to table
+   *
+   * @param {Object} obj - an object to validate
+   * @returns {Object} - a clean object to be put in database
+   *
+   * @throws {Error} - if table does not have any validation method
+   * @throws {ValidationError} - on validation error
+   */
+  static validate (obj) {
+    const validator = this.validator
+
+    if (validator == null) throw new Error('No validation function for table')
+
+    return validator(obj)
+  }
+
+  /**
    * Crude functions
    * While these functions are small, they should be helpfull filling the bridge
    * of bookshelf. Most code taken from bookshelf modelbase

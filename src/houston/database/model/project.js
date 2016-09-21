@@ -11,6 +11,7 @@ import Database from 'lib/database'
 
 import * as Base from './base'
 import Release from './release'
+import validate from 'houston/database/validate/project'
 
 /**
  * Projects
@@ -26,6 +27,14 @@ class Projects extends Base.Model {
    * @return {String} - the table name
    */
   get tableName () { return 'projects' }
+
+  /**
+   * validate
+   * Returns a function to validate data
+   *
+   * @return {Function} - validates objects to be put in projects table
+   */
+  static get validator () { return validate }
 
   /**
    * status

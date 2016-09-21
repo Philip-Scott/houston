@@ -78,7 +78,7 @@ export default class Validation {
 
     if (!this.isRequired) return
 
-    throw new Validation.Error(msg, fn)
+    throw new Validation.Error(`${this.message}: ${msg}`, fn)
   }
 
   /**
@@ -132,8 +132,13 @@ export default class Validation {
       }
     }
 
-    if (typeof this.value !== 'number') this.fail('Not an integer', 'isInt')
-    if (isNaN(this.value)) this.fail('Not an integer', 'isInt')
+    if (
+      typeof this.value !== 'number' ||
+      isNaN(this.value)
+    ) {
+      this.value = null
+      this.fail('Not an integer', 'isInt')
+    }
 
     return this
   }
@@ -158,7 +163,12 @@ export default class Validation {
       }
     }
 
-    if (typeof this.value !== 'string') this.fail('Not a string', 'isString')
+    if (
+      typeof this.value !== 'string'
+    ) {
+      this.value = null
+      this.fail('Not a string', 'isString')
+    }
 
     return this
   }
@@ -175,7 +185,12 @@ export default class Validation {
       this.value = Boolean(this.value)
     }
 
-    if (this.value !== true && this.value !== false) this.fail('Not a boolean', 'isBoolean')
+    if (
+      this.value !== true && this.value !== false
+    ) {
+      this.value = null
+      this.fail('Not a boolean', 'isBoolean')
+    }
 
     return this
   }
@@ -196,8 +211,13 @@ export default class Validation {
       }
     }
 
-    if (isNaN(this.value)) this.fail('Not a date', 'isDate')
-    if (!_.isDate(this.value)) this.fail('Not a date', 'isDate')
+    if (
+      isNaN(this.value) ||
+      !_.isDate(this.value)
+    ) {
+      this.value = null
+      this.fail('Not a date', 'isDate')
+    }
 
     return this
   }
@@ -245,10 +265,15 @@ export default class Validation {
   isURL (protos = ['http', 'https']) {
     this.isString(true)
 
-    if (!/:\/\//.test(this.value)) this.fail('Does not include protocol', 'isURL')
+    // Fail if we are unable to test or split on the value
+    try {
+      if (!/:\/\//.test(this.value)) this.fail('Does not include protocol', 'isURL')
 
-    const [proto] = this.value.split('://')
-    if (protos.indexOf(proto) === -1) this.fail('Is not in list of valid protocols', 'isURL')
+      const [proto] = this.value.split('://')
+      if (protos.indexOf(proto) === -1) this.fail('Is not in list of valid protocols', 'isURL')
+    } catch (e) {
+      this.fail('Not valid URL', 'isURL')
+    }
 
     return this
   }

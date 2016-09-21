@@ -10,6 +10,7 @@ import test from 'ava'
 
 import alias from 'root/.alias'
 
+import * as helpers from 'test/houston/database/_helpers'
 import * as testHelpers from './_helpers'
 import mockConfig from 'test/fixtures/config'
 
@@ -25,6 +26,26 @@ test.beforeEach('setup configuration mock', async (t) => {
   await t.context.helpers.downAll(t.context.database.knex, '0.0.0')
   await t.context.helpers.upAll(t.context.database.knex)
   await testHelpers.seed(t.context.database.knex, 'database_one')
+})
+
+test.serial('can validate an object staticly', async (t) => {
+  const Project = t.context.models.Project
+
+  const one = { id: 'swag' }
+  const two = {
+    'id': 1,
+    'service_name': 'github',
+    'service_id': 'elementary/testing',
+    'address': 'com.github.elementary.testing',
+    'type': 'application',
+    'repository': 'https://github.com/elementary/testing.git',
+    'tag': 'master',
+    'time_created': new Date(),
+    'time_added': new Date()
+  }
+
+  t.throws(() => Project.validate(one), helpers.isValidationError)
+  t.notThrows(() => Project.validate(two))
 })
 
 test.serial('has an accurate find function', async (t) => {

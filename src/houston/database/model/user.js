@@ -10,6 +10,7 @@
 import Database from 'lib/database'
 
 import * as Base from './base'
+import validate from 'houston/database/validate/user'
 
 /**
  * Users
@@ -33,6 +34,14 @@ class Users extends Base.Model {
    * @return {String}[] - a list of fields to remove
    */
   get hidden () { return ['email', 'time_updated', 'time_used'] }
+
+  /**
+   * validate
+   * Returns a function to validate data
+   *
+   * @return {Function} - validates objects to be put in users table
+   */
+  static get validator () { return validate }
 
   /**
    * login
